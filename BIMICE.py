@@ -5,14 +5,13 @@ from random import shuffle as shuffle_list
 from graphlib import TopologicalSorter
 
 from reparo import MICE
-from causalnex.structure.notears import from_pandas as pd_to_dependencies
+from causalnex.structure.notears import from_pandas as df_to_dependencies
 from causalnex.network import BayesianNetwork
 
 class BIMICE(MICE):
     """
     Bayesian Improved Multiple Imputations by Chained Equations
     """
-
     def __init__(self, order_imputations = True, filter_predicators = True):
         self.order_imputations = order_imputations
         self.filter_predicators = filter_predicators
@@ -26,12 +25,12 @@ class BIMICE(MICE):
         :return: list of tuples
             list of edges. Each edge represents conditional dependence between the two nodes (directional).
         """
-        dependencies = pd_to_dependencies(pd.DataFrame(X))
+        dependencies = df_to_dependencies(pd.DataFrame(X).dropna(), w_threshold=0.1)
         bayesian_network = BayesianNetwork(dependencies)
         return bayesian_network.edges
     
     @staticmethod
-    def _get_inverse_dependencies(self, X: np.array) -> dict[int, list[int]]:
+    def _get_inverse_dependencies(X: np.array) -> dict[int, list[int]]:
         """
         :param X: np.array
             input data
@@ -39,7 +38,7 @@ class BIMICE(MICE):
             inverse dependencies. Each key represents a node and the value is a list of its parents.
         """
         dependencies_edges = BIMICE._get_bayesian_network_edges(X)
-        inverse_dependencies = {independent: [] for _, independent in range(X.shape[1])}
+        inverse_dependencies = {independent: [] for independent in range(X.shape[1])}
         for dependent, independent in dependencies_edges:
             inverse_dependencies[independent].append(dependent)
         return inverse_dependencies
@@ -57,8 +56,14 @@ class BIMICE(MICE):
         X = X.copy()
         for feature in range(X.shape[1]):
             predicators = predicators_dict[feature]
-            current_sub_data = X[:, predicators + [feature]]
-            # use super fit_transform
-            current_sub_imputation = super().fit_transform(current_sub_data)
-            X[:, feature] = current_sub_imputation[:, -1]
-        return X
+            if not predicators:
+                X[np.isnan(X[:, feature]), feature] = np.nanmean(X[:, feature])
+                if np.isnan(X[:, feature]).sum() > 0:
+                    raise ValueError(f'There are still NaN values in {feature} column (with no predicators)')
+            else:
+                current_sub_data = X[:, predicators + [feature]]
+                current_sub_imputation = super().transform(current_sub_data)
+                X[:, feature] = current_sub_imputation[:, -1]
+                if np.isnan(X[:, feature]).sum() > 0:
+                    raise ValueError(f'There are still NaN values in {feature} column (with predicators)')
+        return X, [len(predicators_dict[feature]) for feature in range(X.shape[1])]
