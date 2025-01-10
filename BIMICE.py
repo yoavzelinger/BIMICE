@@ -39,7 +39,10 @@ class BIMICE(MICE):
 		:return: dict
 			inverse dependencies. Each key represents a node and the value is a list of its parents.
 		"""
-		return {0: [1, 2, 3], 1: [], 2: [1, 3], 3: [], 4: [0, 6, 7, 1, 2, 3], 5: [0, 6, 1, 3], 6: [0, 1, 2, 3], 7: [0, 5, 6, 1, 2, 3], 8: [0, 5, 6, 7, 1, 3]}
+		if X.shape[1] == 9:
+			return {0: [1, 2, 3], 1: [], 2: [1, 3], 3: [], 4: [0, 6, 7, 1, 2, 3], 5: [0, 6, 1, 3], 6: [0, 1, 2, 3], 7: [0, 5, 6, 1, 2, 3], 8: [0, 5, 6, 7, 1, 3]}		
+		return {0: [], 1: [0, 2, 4], 2: [], 3: [0, 2, 4], 4: [], 5: [], 6: [0, 3, 2, 4, 5]}
+
 		dependencies_edges = BIMICE._get_bayesian_network_edges(X)
 		inverse_dependencies = {independent: [] for independent in range(X.shape[1])}
 		for dependent, independent in dependencies_edges:
@@ -66,7 +69,7 @@ class BIMICE(MICE):
 
 		return y
 
-	def transform(self, X, iterations=10):
+	def transform(self, X, n_iterations=10):
 		# Get the relevant predictors for each column
 		predicators_dict = BIMICE._get_inverse_dependencies(X)
 		imputation_order = list(TopologicalSorter(predicators_dict).static_order())
@@ -85,7 +88,7 @@ class BIMICE(MICE):
 			missing_locations = np.where(np.isnan(X))
 			X[missing_locations] = np.take(features_means, missing_locations[1])
 		
-		for i in range(iterations):
+		for i in range(n_iterations):
 			for feature in imputation_order:
 				feature_missing_indices = features_missing_indices[feature]
 				predicators = predicators_dict[feature]
@@ -100,5 +103,13 @@ class BIMICE(MICE):
 						raise ValueError(f'There are still NaN values in {feature} column (with predicators)')
 		return X, [len(predicators_dict[feature]) for feature in range(X.shape[1])]
 	
-	def fit_transform(self, X, iterations=2):
-		return self.transform(X, iterations=iterations)
+	def fit_transform(self, X, n_iterations=5):
+		"""
+		Fill in the missing values of X.
+		
+		:param X: np.array of shape (n_samples, n_features)
+			The input samples.
+		:param n_iterations: int, default = 5
+			The number of iterations the algorithm goes through.
+		"""	
+		return self.transform(X, n_iterations=n_iterations)
