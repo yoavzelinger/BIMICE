@@ -8,12 +8,14 @@ To get the results, run the evaluation notebook (evaluate.ipynb).
 
 To run the output python 3.9 is mandatory. 
 
-### Required libraries to run:
+### Required libraries to BIMICE:
 - numpy
 - pandas
-- datetime
-- pickle
 - random
 - graphlib
 - reparo
 - causalnex
+
+#### * Additional library required for the evaluation:
+- datetime
+- pickle
