@@ -1,0 +1,99 @@
+% This file was created with tikzplotlib v0.10.1.
+\begin{tikzpicture}
+
+\definecolor{crimson2143940}{RGB}{214,39,40}
+\definecolor{darkgray176}{RGB}{176,176,176}
+\definecolor{darkorange25512714}{RGB}{255,127,14}
+\definecolor{forestgreen4416044}{RGB}{44,160,44}
+\definecolor{lightgray204}{RGB}{204,204,204}
+\definecolor{mediumpurple148103189}{RGB}{148,103,189}
+\definecolor{sienna1408675}{RGB}{140,86,75}
+\definecolor{steelblue31119180}{RGB}{31,119,180}
+
+\begin{axis}[
+legend cell align={left},
+legend style={
+  fill opacity=0.8,
+  draw opacity=1,
+  text opacity=1,
+  at={(0.03,0.97)},
+  anchor=north west,
+  draw=lightgray204
+},
+tick align=outside,
+tick pos=left,
+title={financial-risk dataset, 15 iterations},
+x grid style={darkgray176},
+xlabel={Total missing values severity},
+xmin=-0.15, xmax=3.15,
+xtick style={color=black},
+xtick={0,1,2,3},
+xtick={0,1,2,3},
+xtick={0,1,2,3},
+xtick={0,1,2,3},
+xtick={0,1,2,3},
+xtick={0,1,2,3},
+xtick={0,1,2,3},
+xticklabels={10%,20%,30%,40%},
+xticklabels={10%,20%,30%,40%},
+xticklabels={10%,20%,30%,40%},
+xticklabels={10%,20%,30%,40%},
+xticklabels={10%,20%,30%,40%},
+xticklabels={10%,20%,30%,40%},
+xticklabels={10%,20%,30%,40%},
+y grid style={darkgray176},
+ylabel={MAE},
+ymin=896.024158864496, ymax=15234.2107163447,
+ytick style={color=black}
+]
+\addplot [thick, steelblue31119180]
+table {%
+0 1548.79654915493
+1 3057.70180200454
+2 4606.41733473773
+3 5982.44750708012
+};
+\addlegendentry{OrderBIMICE}
+\addplot [thick, darkorange25512714, dash pattern=on 7.4pt off 3.2pt]
+table {%
+0 1547.75991147723
+1 3057.29439227957
+2 4607.29664497923
+3 5983.00611008834
+};
+\addlegendentry{FilterBIMICE}
+\addplot [thick, forestgreen4416044, dash pattern=on 12.8pt off 3.2pt on 2pt off 3.2pt]
+table {%
+0 1547.75991147723
+1 3057.29439227955
+2 4607.29664508481
+3 5983.00611713386
+};
+\addlegendentry{FullBIMICE}
+\addplot [thick, crimson2143940, dash pattern=on 2pt off 3.3pt]
+table {%
+0 1548.18203165429
+1 3059.68097858242
+2 4610.1446533387
+3 5991.26965043867
+};
+\addlegendentry{MICE}
+\addplot [thick, mediumpurple148103189]
+table {%
+0 3652.07533001516
+1 7379.10036694294
+2 11246.4374464795
+3 14582.474963732
+};
+\addlegendentry{SICE}
+\addplot [thick, sienna1408675, dash pattern=on 7.4pt off 3.2pt]
+table {%
+0 1771.15606763098
+1 3897.67802073625
+2 4829.64291930109
+3 6357.2556050204
+};
+\addlegendentry{KNN}
+\end{axis}
+
+\end{tikzpicture}

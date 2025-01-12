@@ -1,0 +1,85 @@
+% This file was created with tikzplotlib v0.10.1.
+\begin{tikzpicture}
+
+\definecolor{crimson2143940}{RGB}{214,39,40}
+\definecolor{darkgray176}{RGB}{176,176,176}
+\definecolor{darkorange25512714}{RGB}{255,127,14}
+\definecolor{forestgreen4416044}{RGB}{44,160,44}
+\definecolor{lightgray204}{RGB}{204,204,204}
+\definecolor{mediumpurple148103189}{RGB}{148,103,189}
+\definecolor{sienna1408675}{RGB}{140,86,75}
+\definecolor{steelblue31119180}{RGB}{31,119,180}
+
+\begin{axis}[
+legend cell align={left},
+legend style={
+  fill opacity=0.8,
+  draw opacity=1,
+  text opacity=1,
+  at={(0.03,0.97)},
+  anchor=north west,
+  draw=lightgray204
+},
+tick align=outside,
+tick pos=left,
+title={Financial Dataset, 10 Iters, Missing Features - MAE},
+x grid style={darkgray176},
+xlabel={Number of missing features},
+xmin=0.7, xmax=7.3,
+xtick style={color=black},
+y grid style={darkgray176},
+ylabel={MAE},
+ymin=-44.5498362827571, ymax=939.036211194869,
+ytick style={color=black}
+]
+\addplot [thick, steelblue31119180]
+table {%
+1 0.158620420771358
+3 132.340977903008
+5 77.3111256567852
+7 364.364129453846
+};
+\addlegendentry{OrderBIMICE}
+\addplot [thick, darkorange25512714, dash pattern=on 7.4pt off 3.2pt]
+table {%
+1 0.158620420771357
+3 132.571982875237
+5 77.4926410149507
+7 364.207366141394
+};
+\addlegendentry{FilterBIMICE}
+\addplot [thick, forestgreen4416044, dash pattern=on 12.8pt off 3.2pt on 2pt off 3.2pt]
+table {%
+1 0.158620420771357
+3 132.571982875926
+5 77.4926410149508
+7 364.207366155273
+};
+\addlegendentry{FullBIMICE}
+\addplot [thick, crimson2143940, dash pattern=on 2pt off 3.3pt]
+table {%
+1 0.158681942148899
+3 132.623334258127
+5 77.5378294661072
+7 364.23095942495
+};
+\addlegendentry{MICE}
+\addplot [thick, mediumpurple148103189]
+table {%
+1 2.24924461939387
+3 302.310518262907
+5 193.89587257068
+7 894.32775449134
+};
+\addlegendentry{SICE}
+\addplot [thick, sienna1408675, dash pattern=on 7.4pt off 3.2pt]
+table {%
+1 0.171594243489771
+3 144.699454732048
+5 84.1761693586435
+7 403.271856441549
+};
+\addlegendentry{KNN}
+\end{axis}
+
+\end{tikzpicture}

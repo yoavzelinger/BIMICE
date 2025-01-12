@@ -1,0 +1,91 @@
+% This file was created with tikzplotlib v0.10.1.
+\begin{tikzpicture}
+
+\definecolor{crimson2143940}{RGB}{214,39,40}
+\definecolor{darkgray176}{RGB}{176,176,176}
+\definecolor{darkorange25512714}{RGB}{255,127,14}
+\definecolor{forestgreen4416044}{RGB}{44,160,44}
+\definecolor{lightgray204}{RGB}{204,204,204}
+\definecolor{mediumpurple148103189}{RGB}{148,103,189}
+\definecolor{sienna1408675}{RGB}{140,86,75}
+\definecolor{steelblue31119180}{RGB}{31,119,180}
+
+\begin{axis}[
+legend cell align={left},
+legend style={
+  fill opacity=0.8,
+  draw opacity=1,
+  text opacity=1,
+  at={(0.03,0.97)},
+  anchor=north west,
+  draw=lightgray204
+},
+tick align=outside,
+tick pos=left,
+title={Framingham Dataset, 10 Iters, Missing Features - MAE},
+x grid style={darkgray176},
+xlabel={Number of missing features},
+xmin=0.6, xmax=9.4,
+xtick style={color=black},
+y grid style={darkgray176},
+ylabel={MAE},
+ymin=-0.0457327705282245, ymax=1.31739958837317,
+ytick style={color=black}
+]
+\addplot [thick, steelblue31119180]
+table {%
+1 0.0287168285042025
+3 0.08783684567833
+5 0.201327957054588
+7 0.129500107203419
+9 0.400017783325712
+};
+\addlegendentry{OrderBIMICE}
+\addplot [thick, darkorange25512714, dash pattern=on 7.4pt off 3.2pt]
+table {%
+1 0.0163159464949507
+3 0.0840292949540354
+5 0.194986849059797
+7 0.12420580259789
+9 0.37275200498962
+};
+\addlegendentry{FilterBIMICE}
+\addplot [thick, forestgreen4416044, dash pattern=on 12.8pt off 3.2pt on 2pt off 3.2pt]
+table {%
+1 0.0163159465073915
+3 0.0840292951433624
+5 0.194986849243153
+7 0.124205802655958
+9 0.372752122434208
+};
+\addlegendentry{FullBIMICE}
+\addplot [thick, crimson2143940, dash pattern=on 2pt off 3.3pt]
+table {%
+1 0.0162277912400205
+3 0.0842000274260017
+5 0.192132790253714
+7 0.116016320902581
+9 0.362761643548492
+};
+\addlegendentry{MICE}
+\addplot [thick, mediumpurple148103189]
+table {%
+1 0.0699536910923454
+3 0.462023668997246
+5 0.927635521656224
+7 1.25543902660492
+9 1.06113986500802
+};
+\addlegendentry{SICE}
+\addplot [thick, sienna1408675, dash pattern=on 7.4pt off 3.2pt]
+table {%
+1 0.0179763991552107
+3 0.0902573286293874
+5 0.211384775918957
+7 0.129127718435236
+9 0.423994013574333
+};
+\addlegendentry{KNN}
+\end{axis}
+
+\end{tikzpicture}
