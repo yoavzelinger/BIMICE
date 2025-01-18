@@ -39,10 +39,6 @@ class BIMICE(MICE):
 		:return: dict
 			inverse dependencies. Each key represents a node and the value is a list of its parents.
 		"""
-		if X.shape[1] == 9:
-			return {0: [1, 2, 3], 1: [], 2: [1, 3], 3: [], 4: [0, 6, 7, 1, 2, 3], 5: [0, 6, 1, 3], 6: [0, 1, 2, 3], 7: [0, 5, 6, 1, 2, 3], 8: [0, 5, 6, 7, 1, 3]}		
-		return {0: [], 1: [0, 2, 4], 2: [], 3: [0, 2, 4], 4: [], 5: [], 6: [0, 3, 2, 4, 5]}
-
 		dependencies_edges = BIMICE._get_bayesian_network_edges(X)
 		inverse_dependencies = {independent: [] for independent in range(X.shape[1])}
 		for dependent, independent in dependencies_edges:
