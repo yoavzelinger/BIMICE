@@ -12,7 +12,7 @@ from causalnex.network import BayesianNetwork
 
 class BIMICE(MICE):
 	"""
-	Bayesian Improved Multiple Imputations by Chained Equations
+	Bayesian Influenced Multiple Imputations by Chained Equations
 	"""
 	def __init__(self, order_imputations = True, filter_predicators = True):
 		self.order_imputations = order_imputations
